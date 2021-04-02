@@ -4,11 +4,14 @@ import hust.cs.javacourse.search.index.AbstractDocument;
 import hust.cs.javacourse.search.index.AbstractTermTuple;
 import hust.cs.javacourse.search.index.impl.Document;
 import hust.cs.javacourse.search.index.impl.Term;
+import hust.cs.javacourse.search.parse.AbstractTermTupleFilter;
+import hust.cs.javacourse.search.parse.AbstractTermTupleScanner;
 import hust.cs.javacourse.search.parse.AbstractTermTupleStream;
 import hust.cs.javacourse.search.index.AbstractDocumentBuilder;
+import hust.cs.javacourse.search.parse.impl.TermTupleFilter;
+import hust.cs.javacourse.search.parse.impl.TermTupleScanner;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
@@ -42,11 +45,12 @@ public class DocumentBuilder extends AbstractDocumentBuilder{
         List<AbstractTermTuple> tuples=new ArrayList<AbstractTermTuple>();
 
         try{
-            Scanner scanner=new Scanner(file);
-            while(scanner.hasNext()){
-                String word=scanner.next();
-                Term term=new Term(word);
-                TermTuple termTuple=new TermTuple(term,4);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            AbstractTermTupleScanner termTupleScanner=new TermTupleScanner(reader);
+            AbstractTermTupleFilter termTupleFilter=new TermTupleFilter(termTupleScanner);
+
+            AbstractTermTuple termTuple;
+            while((termTuple=termTupleFilter.next())!=null){
                 tuples.add(termTuple);
             }
         }catch(FileNotFoundException e){

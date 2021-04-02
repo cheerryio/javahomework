@@ -12,6 +12,7 @@ public class IndexBuilderTest {
         DocumentBuilder documentBuilder=new DocumentBuilder();
         IndexBuilder indexBuilder=new IndexBuilder(documentBuilder);
         AbstractIndex index= indexBuilder.buildIndex("text");
+        index.optimize();
         System.out.println(index);
     }
 }

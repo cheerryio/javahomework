@@ -28,8 +28,9 @@ public class PostingList extends AbstractPostingList {
     public String toString(){
         String s="(";
         for(AbstractPosting posting:this.list){
-            s+=posting;
+            s+=posting+"->";
         }
+        s+="()";
         s+=")";
         return s;
     }

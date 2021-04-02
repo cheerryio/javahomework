@@ -3,6 +3,7 @@ package hust.cs.javacourse.search.index.impl;
 import hust.cs.javacourse.search.index.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class Index extends AbstractIndex {
         for (int i = 0; i < document.getTupleSize(); i++) {
             AbstractTermTuple termTuple = document.getTuples().get(i);
             AbstractTerm term = termTuple.term;
+
             if (m.containsKey(term)) {
                 // 此单词出现过
                 AbstractPosting posting = m.get(term);
@@ -62,9 +64,10 @@ public class Index extends AbstractIndex {
                 posting.getPositions().add(i);
             } else {
                 // 此单词未出现过
-                List<Integer> positions = new ArrayList<Integer>();
-                positions.add(i);
-                AbstractPosting posting = new Posting(docId, 1, positions);
+                AbstractPosting posting = new Posting();
+                posting.setDocId(docId);
+                posting.setFreq(1);
+                posting.getPositions().add(i);
                 m.put(term, posting);
             }
         }
@@ -167,7 +170,14 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void writeObject(ObjectOutputStream out) {
+        try{
+            out.writeObject(docIdToDocPathMapping);
+            out.writeObject(termToPostingListMapping);
+        }catch (IOException e){
+            System.out.println("error");
+        }
 
+        return;
     }
 
     /**
@@ -177,6 +187,5 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void readObject(ObjectInputStream in) {
-
     }
 }

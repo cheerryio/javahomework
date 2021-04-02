@@ -28,7 +28,7 @@ public class Term extends AbstractTerm {
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
-        return this.content == ((AbstractTerm) obj).getContent();
+        return this.content.equals(((AbstractTerm)obj).getContent());
     }
 
     /**
