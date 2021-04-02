@@ -26,6 +26,11 @@ public abstract class AbstractTermTuple {
      */
     public int curPos ;
 
+    public AbstractTermTuple(AbstractTerm term,int curPos){
+        this.term=term;
+        this.curPos=curPos;
+    }
+
     /**
      * 判断二个三元组内容是否相同
      * @param obj ：要比较的另外一个三元组

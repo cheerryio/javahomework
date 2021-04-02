@@ -1,18 +1,28 @@
 package hust.cs.javacourse.search.index.impl;
 
-import hust.cs.javacourse.search.index.AbstractDocument;
-import hust.cs.javacourse.search.index.AbstractIndex;
-import hust.cs.javacourse.search.index.AbstractPostingList;
-import hust.cs.javacourse.search.index.AbstractTerm;
+import hust.cs.javacourse.search.index.*;
+
 import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
  * AbstractIndex的具体实现类
  */
 public class Index extends AbstractIndex {
+
+    /**
+     * 缺省构造函数
+     */
+    public Index() {
+        super();
+    }
+
     /**
      * 返回索引的字符串表示
      *
@@ -20,17 +30,54 @@ public class Index extends AbstractIndex {
      */
     @Override
     public String toString() {
-        return null;
+        String s = "";
+        for (AbstractTerm term : this.termToPostingListMapping.keySet()) {
+            AbstractPostingList postingList = this.termToPostingListMapping.get(term);
+            s += term + ":"+postingList+"\n";
+        }
+        return s;
     }
 
     /**
      * 添加文档到索引，更新索引内部的HashMap
+     * 1. 构造一个posting的hashMap
+     * 2. 将对应term添加到termToPostingListMapping
      *
      * @param document ：文档的AbstractDocument子类型表示
      */
     @Override
     public void addDocument(AbstractDocument document) {
-
+        if (document == null) {
+            return;
+        }
+        int docId = document.getDocId();
+        Map<AbstractTerm, AbstractPosting> m = new HashMap<AbstractTerm, AbstractPosting>();
+        for (int i = 0; i < document.getTupleSize(); i++) {
+            AbstractTermTuple termTuple = document.getTuples().get(i);
+            AbstractTerm term = termTuple.term;
+            if (m.containsKey(term)) {
+                // 此单词出现过
+                AbstractPosting posting = m.get(term);
+                posting.setFreq(posting.getFreq() + 1);
+                posting.getPositions().add(i);
+            } else {
+                // 此单词未出现过
+                List<Integer> positions = new ArrayList<Integer>();
+                positions.add(i);
+                AbstractPosting posting = new Posting(docId, 1, positions);
+                m.put(term, posting);
+            }
+        }
+        for (AbstractTerm term : m.keySet()) {
+            AbstractPosting posting = m.get(term);
+            if (this.termToPostingListMapping.containsKey(term)) {
+                this.termToPostingListMapping.get(term).add(posting);
+            } else {
+                AbstractPostingList postingList = new PostingList();
+                postingList.add(posting);
+                this.termToPostingListMapping.put(term, postingList);
+            }
+        }
     }
 
     /**
@@ -63,7 +110,10 @@ public class Index extends AbstractIndex {
      */
     @Override
     public AbstractPostingList search(AbstractTerm term) {
-        return null;
+        if (!this.termToPostingListMapping.containsKey(term)) {
+            return null;
+        }
+        return this.termToPostingListMapping.get(term);
     }
 
     /**
@@ -73,7 +123,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public Set<AbstractTerm> getDictionary() {
-        return null;
+        return this.termToPostingListMapping.keySet();
     }
 
     /**
@@ -86,7 +136,14 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void optimize() {
-
+        for (AbstractTerm term : this.termToPostingListMapping.keySet()) {
+            AbstractPostingList postingList = this.termToPostingListMapping.get(term);
+            postingList.sort();
+            for (int i = 0; i < postingList.size(); i++) {
+                AbstractPosting posting = postingList.get(i);
+                posting.sort();
+            }
+        }
     }
 
     /**
@@ -97,7 +154,10 @@ public class Index extends AbstractIndex {
      */
     @Override
     public String getDocName(int docId) {
-        return null;
+        if (!this.docIdToDocPathMapping.containsKey(docId)) {
+            return "not exist";
+        }
+        return this.docIdToDocPathMapping.get(docId);
     }
 
     /**
