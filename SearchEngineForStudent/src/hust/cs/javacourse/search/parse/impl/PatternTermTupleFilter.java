@@ -9,9 +9,19 @@ import hust.cs.javacourse.search.parse.AbstractTermTupleFilter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * AbstractTermTupleFilter装饰者实现
+ */
 public class PatternTermTupleFilter extends AbstractTermTupleFilter{
+    /**
+     * 分隔符正则
+     */
     Pattern pattern=Pattern.compile(Config.TERM_FILTER_PATTERN);
 
+    /**
+     * 构造函数
+     * @param input：单词输入流
+     */
     public PatternTermTupleFilter(AbstractTermTupleStream input) {
         super(input);
     }
@@ -20,6 +30,7 @@ public class PatternTermTupleFilter extends AbstractTermTupleFilter{
      * 获得下一个三元组
      * @return: 下一个三元组；如果到了流的末尾，返回null
      */
+    @Override
     public AbstractTermTuple next(){
         java.util.function.Function<AbstractTermTuple,Boolean> filter=(termTuple)->{
             return !pattern.matcher(termTuple.term.getContent()).matches();

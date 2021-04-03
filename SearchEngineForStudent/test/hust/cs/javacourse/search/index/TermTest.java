@@ -4,7 +4,13 @@ import hust.cs.javacourse.search.index.impl.Term;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Term测试类
+ */
 public class TermTest {
+    /**
+     * 测试主类
+     */
     @Test
     void testTerm(){
         String termString="termString";

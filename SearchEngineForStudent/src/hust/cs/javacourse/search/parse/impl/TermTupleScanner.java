@@ -1,6 +1,9 @@
 package hust.cs.javacourse.search.parse.impl;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Locale;
 import java.util.Scanner;
 
 import hust.cs.javacourse.search.index.AbstractTerm;
@@ -13,6 +16,9 @@ import hust.cs.javacourse.search.util.Config;
 
 import java.util.regex.*;
 
+/**
+ * AbstractTermTupleScanner子类实现
+ */
 public class TermTupleScanner extends AbstractTermTupleScanner {
 
     Pattern spliter = Pattern.compile(Config.STRING_SPLITTER_REGEX);
@@ -39,6 +45,7 @@ public class TermTupleScanner extends AbstractTermTupleScanner {
      *
      * @return: 下一个三元组；如果到了流的末尾，返回null
      */
+    @Override
     public AbstractTermTuple next() {
         try {
             int c = this.input.read();
@@ -56,11 +63,16 @@ public class TermTupleScanner extends AbstractTermTupleScanner {
             if (c == -1) {
                 return null;
             }
+
+            // 是否忽略大小写
+            if(Config.IGNORE_CASE){
+                s=s.toLowerCase(Locale.ROOT);
+            }
             AbstractTerm term = new Term(s);
             AbstractTermTuple termTuple = new TermTuple(term, curcurpos++);
             return termTuple;
-        } catch (Exception e) {
-            System.out.println("error");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }

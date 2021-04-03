@@ -182,7 +182,7 @@ public class Index extends AbstractIndex {
             out.writeObject(docIdToDocPathMapping);
             out.writeObject(termToPostingListMapping);
         }catch (IOException e){
-            System.out.println("error");
+            e.printStackTrace();
         }
 
         return;
@@ -198,8 +198,10 @@ public class Index extends AbstractIndex {
         try{
             this.docIdToDocPathMapping=(Map<Integer, String>) (in.readObject());
             this.termToPostingListMapping=(Map<AbstractTerm, AbstractPostingList>) (in.readObject());
-        }catch(Exception e){
-            System.err.println(e);
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
         }
 
     }

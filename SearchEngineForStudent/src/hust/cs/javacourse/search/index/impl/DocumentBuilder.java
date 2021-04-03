@@ -15,6 +15,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * AbstractDocumentBuilder子类实现
+ */
 public class DocumentBuilder extends AbstractDocumentBuilder {
     /**
      * <pre>
@@ -25,6 +28,7 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
      * @return ：Document对象
      * </pre>
      */
+    @Override
     public AbstractDocument build(int docId, String docPath, AbstractTermTupleStream termTupleStream) {
         List<AbstractTermTuple> tuples = new ArrayList<AbstractTermTuple>();
         AbstractTermTuple termTuple;
@@ -47,6 +51,7 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
      * @return          : Document对象
      * </pre>
      */
+    @Override
     public AbstractDocument build(int docId, String docPath, File file) {
         try {
             AbstractTermTupleStream ts = null;
@@ -60,7 +65,7 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
             AbstractDocument document = this.build(docId, docPath, termTupleFilter);
             return document;
         } catch (FileNotFoundException e) {
-            System.out.println("error");
+            e.printStackTrace();
         }
         return null;
     }

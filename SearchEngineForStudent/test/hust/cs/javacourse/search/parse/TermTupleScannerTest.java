@@ -8,7 +8,9 @@ import hust.cs.javacourse.search.parse.impl.TermTupleScanner;
 import java.io.*;
 import java.util.Scanner;
 
-
+/**
+ * TermTupleScanner测试类
+ */
 public class TermTupleScannerTest {
     @Test
     void testTermTupleScanner(){

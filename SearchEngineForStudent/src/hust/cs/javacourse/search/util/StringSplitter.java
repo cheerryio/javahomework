@@ -9,7 +9,11 @@ import java.util.regex.Pattern;
  * 字符串分割类，根据标点符号和空白符将字符串分成一个个单词
  */
 public class StringSplitter {
+    /**
+     * 构造函数
+     */
     public StringSplitter(){}
+
     private  String splitRegex = null;
     private  Pattern pattern = null;
     private  Matcher match = null;
@@ -51,6 +55,10 @@ public class StringSplitter {
         return list;
     }
 
+    /**
+     * main
+     * @param args：参数
+     */
     public static void main(String[] args){
         StringSplitter splitter = new StringSplitter();
         String regex1TestInput = "key1,， ,Key2;Key3，:Key4;；;Key5；？?Key6，!Key7；Key8   key9\nkey10.。？key11";

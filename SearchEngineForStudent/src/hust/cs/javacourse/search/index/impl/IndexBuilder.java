@@ -9,7 +9,14 @@ import java.nio.file.Paths;
 
 import java.io.File;
 
+/**
+ * AbstractIndexBuilder子类实现
+ */
 public class IndexBuilder extends AbstractIndexBuilder{
+    /**
+     * 构造函数
+     * @param docBuilder：文档构造类
+     */
     public IndexBuilder(AbstractDocumentBuilder docBuilder){
         super(docBuilder);
     }
@@ -22,6 +29,7 @@ public class IndexBuilder extends AbstractIndexBuilder{
      * @return ：构建好的索引
      * </pre>
      */
+    @Override
     public AbstractIndex buildIndex(String rootDirectory){
         AbstractIndex index=new Index();
 

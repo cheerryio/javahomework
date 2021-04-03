@@ -6,14 +6,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * AbstractTerm子类实现
+ */
 public class Term extends AbstractTerm {
 
-    // 缺省构造函数
+    /**
+     * 缺省构造函数
+     */
     public Term() {
         super();
     }
 
-    // 调用父类构造函数
+    /**
+     * 构造函数
+     *
+     * @param content：单词字符串
+     */
     public Term(String content) {
         super(content);
     }
@@ -79,11 +88,7 @@ public class Term extends AbstractTerm {
      */
     @Override
     public void writeObject(ObjectOutputStream out) {
-        try{
-            out.writeObject(this);
-        }catch(IOException e){
 
-        }
     }
 
     /**

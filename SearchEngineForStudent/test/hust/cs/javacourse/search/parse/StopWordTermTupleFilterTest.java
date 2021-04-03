@@ -11,6 +11,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
+/**
+ * StopWordTermTupleFiler测试类
+ */
 public class StopWordTermTupleFilterTest {
     @Test
     void testTermTupleFilter(){

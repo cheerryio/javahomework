@@ -5,9 +5,15 @@ import hust.cs.javacourse.search.parse.AbstractTermTupleStream;
 import hust.cs.javacourse.search.parse.AbstractTermTupleFilter;
 import hust.cs.javacourse.search.util.Config;
 
+/**
+ * AbstractTermTupleFilter装饰者实现
+ */
 public class LengthTermTupleFilter extends AbstractTermTupleFilter{
 
-
+    /**
+     * 构造函数
+     * @param input：输入流类
+     */
     public LengthTermTupleFilter(AbstractTermTupleStream input) {
         super(input);
     }
@@ -16,6 +22,7 @@ public class LengthTermTupleFilter extends AbstractTermTupleFilter{
      * 获得下一个三元组
      * @return: 下一个三元组；如果到了流的末尾，返回null
      */
+    @Override
     public AbstractTermTuple next(){
         java.util.function.Function<AbstractTermTuple,Boolean> filter=(termTuple)->{
             int l=termTuple.term.getContent().length();

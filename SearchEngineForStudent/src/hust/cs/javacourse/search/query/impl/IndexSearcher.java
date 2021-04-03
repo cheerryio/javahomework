@@ -17,17 +17,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * AbstractIndexSearcher子类实现
+ */
 public class IndexSearcher extends AbstractIndexSearcher {
     /**
      * 从指定索引文件打开索引，加载到index对象里. 一定要先打开索引，才能执行search方法
      *
      * @param indexFile ：指定索引文件
      */
+    @Override
     public void open(String indexFile) {
         try {
             ObjectInputStream in = new ObjectInputStream((new FileInputStream(indexFile)));
-            index = new Index();
-            index.readObject(in);
+            this.index.readObject(in);
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -41,6 +44,7 @@ public class IndexSearcher extends AbstractIndexSearcher {
      * @param sorter    ：排序器
      * @return ：命中结果数组
      */
+    @Override
     public AbstractHit[] search(AbstractTerm queryTerm, Sort sorter) {
         AbstractPostingList postingList = this.index.search(queryTerm);
         if (postingList == null) {
@@ -79,6 +83,7 @@ public class IndexSearcher extends AbstractIndexSearcher {
      * @param combine    ：   多个检索词的逻辑组合方式
      * @return ：命中结果数组
      */
+    @Override
     public AbstractHit[] search(AbstractTerm queryTerm1, AbstractTerm queryTerm2, Sort sorter, AbstractIndexSearcher.LogicalCombination combine) {
         Map<Integer, Map<AbstractTerm, AbstractPosting>> sMap = new HashMap<Integer, Map<AbstractTerm, AbstractPosting>>();
         if (this.index.search(queryTerm1) == null && combine == LogicalCombination.AND) {

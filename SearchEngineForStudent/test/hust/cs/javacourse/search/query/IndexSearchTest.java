@@ -18,6 +18,9 @@ import java.nio.file.Path;
 
 import java.nio.file.Paths;
 
+/**
+ * IndexSearch测试类
+ */
 public class IndexSearchTest {
     @Test
     void testIndexSearch() {
@@ -25,20 +28,14 @@ public class IndexSearchTest {
         IndexSearcher indexSearcher = new IndexSearcher();
         Path pathname = Paths.get(Config.INDEX_DIR, "index");
         indexSearcher.open(pathname.toString());
-        AbstractTerm term1 = new Term("novel");
-        AbstractTerm term2 = new Term("coronavirus");
+        AbstractTerm term1 = new Term("doer");
+        AbstractTerm term2 = new Term("cares");
 
         Sort sorter;
         AbstractHit[] hits;
 
 //        sorter = new NullSort();
 //        hits = indexSearcher.search(term1, sorter);
-//        if(hits!=null){
-//            for (AbstractHit hit : hits) {
-//                System.out.println(hit + " " + hit.getScore() + "分" + " 路径: " + hit.getDocPath());
-//            }
-//        }
-
 
         sorter = new FreqSort();
         hits = indexSearcher.search(term1, term2, sorter, AbstractIndexSearcher.LogicalCombination.ANDNEIGHBOR);

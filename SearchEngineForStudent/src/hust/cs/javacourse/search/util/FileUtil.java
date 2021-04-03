@@ -114,6 +114,10 @@ public class FileUtil {
         return filePaths;
     }
 
+    /**
+     * main
+     * @param args：参数
+     */
     public static void main(String[] args){
         //从文件读
         String fileName = Config.DOC_DIR + "1.txt";

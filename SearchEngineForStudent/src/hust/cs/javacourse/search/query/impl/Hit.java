@@ -7,6 +7,9 @@ import hust.cs.javacourse.search.util.FileUtil;
 
 import java.util.Map;
 
+/**
+ * AbstractHit子类实现
+ */
 public class Hit extends AbstractHit implements Comparable<AbstractHit>{
     /**
      * 默认构造函数
@@ -38,6 +41,7 @@ public class Hit extends AbstractHit implements Comparable<AbstractHit>{
      * 获得文档id
      * @return ： 文档id
      */
+    @Override
     public int getDocId(){
         return this.docId;
     }
@@ -46,6 +50,7 @@ public class Hit extends AbstractHit implements Comparable<AbstractHit>{
      * 获得文档绝对路径
      * @return ：文档绝对路径
      */
+    @Override
     public String getDocPath(){
         return this.docPath;
     }
@@ -54,6 +59,7 @@ public class Hit extends AbstractHit implements Comparable<AbstractHit>{
      * 获得文档内容
      * @return ： 文档内容
      */
+    @Override
     public String getContent(){
         return this.content;
     }
@@ -62,6 +68,7 @@ public class Hit extends AbstractHit implements Comparable<AbstractHit>{
      * 设置文档内容
      * @param content ：文档内容
      */
+    @Override
     public void setContent(String content){
         this.content=content;
     }
@@ -70,6 +77,7 @@ public class Hit extends AbstractHit implements Comparable<AbstractHit>{
      * 获得文档得分
      * @return ： 文档得分
      */
+    @Override
     public double getScore(){
         return this.score;
     }
@@ -78,6 +86,7 @@ public class Hit extends AbstractHit implements Comparable<AbstractHit>{
      * 设置文档得分
      * @param score ：文档得分
      */
+    @Override
     public void setScore(double score){
         this.score=score;
     }
@@ -86,6 +95,7 @@ public class Hit extends AbstractHit implements Comparable<AbstractHit>{
      * 获得命中的单词和对应的Posting键值对
      * @return ：命中的单词和对应的Posting键值对
      */
+    @Override
     public Map<AbstractTerm, AbstractPosting> getTermPostingMapping(){
         return this.termPostingMapping;
     }
@@ -116,4 +126,5 @@ public class Hit extends AbstractHit implements Comparable<AbstractHit>{
     public int compareTo(AbstractHit o){
         return (int)(this.score-o.getScore());
     }
+
 }

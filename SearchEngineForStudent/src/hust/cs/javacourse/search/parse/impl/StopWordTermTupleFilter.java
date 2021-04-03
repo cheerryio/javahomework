@@ -8,13 +8,17 @@ import hust.cs.javacourse.search.parse.AbstractTermTupleFilter;
 
 import hust.cs.javacourse.search.parse.AbstractTermTupleStream;
 
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
+
 import hust.cs.javacourse.search.util.StopWords;
 
+/**
+ * AbstractTermTupleFilter装饰者实现
+ */
 public class StopWordTermTupleFilter extends AbstractTermTupleFilter{
+    /**
+     * 存放所有停用词的List
+     */
     public List<String> stopwordList=null;
 
     /**
@@ -30,9 +34,10 @@ public class StopWordTermTupleFilter extends AbstractTermTupleFilter{
      * 获得下一个三元组
      * @return: 下一个三元组；如果到了流的末尾，返回null
      */
+    @Override
     public AbstractTermTuple next(){
         java.util.function.Function<AbstractTermTuple,Boolean> filter=(termTuple)->{
-            if(this.stopwordList.contains(termTuple.term.getContent())){
+            if(this.stopwordList.contains(termTuple.term.getContent().toLowerCase(Locale.ROOT))){
                 return true;
             }
             return false;

@@ -9,11 +9,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Sort基于出现次数打分的一个实现
+ */
 public class FreqSort implements Sort {
     /**
      * 对命中结果集合根据文档得分排序
      * @param hits ：命中结果集合
      */
+    @Override
     public void sort(List<AbstractHit> hits){
         hits.sort(new Comparator<AbstractHit>() {
             @Override
@@ -34,6 +38,7 @@ public class FreqSort implements Sort {
      * @return ：命中文档的得分
      * </pre>
      */
+    @Override
     public double score(AbstractHit hit){
         double s=0.0;
         Map<AbstractTerm, AbstractPosting> termPostingMap=hit.getTermPostingMapping();

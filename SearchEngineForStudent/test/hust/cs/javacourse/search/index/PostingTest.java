@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Posting测试类
+ */
 public class PostingTest {
     @Test
     void testPosting(){

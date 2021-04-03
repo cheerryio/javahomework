@@ -26,6 +26,11 @@ public abstract class AbstractTermTuple {
      */
     public int curPos ;
 
+    /**
+     * 构造函数
+     * @param term：单词类
+     * @param curPos：单词在文档中位置
+     */
     public AbstractTermTuple(AbstractTerm term,int curPos){
         this.term=term;
         this.curPos=curPos;

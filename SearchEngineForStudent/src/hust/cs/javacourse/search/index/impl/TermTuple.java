@@ -3,8 +3,16 @@ package hust.cs.javacourse.search.index.impl;
 import hust.cs.javacourse.search.index.AbstractTerm;
 import hust.cs.javacourse.search.index.AbstractTermTuple;
 
+/**
+ * AbstractTermTuple子类实现
+ */
 public class TermTuple extends AbstractTermTuple {
 
+    /**
+     * 构造函数
+     * @param term：单词
+     * @param curPos：单词在文档中位置
+     */
     public TermTuple(AbstractTerm term,int curPos){
         super(term,curPos);
     }

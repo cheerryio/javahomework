@@ -32,6 +32,10 @@ public class Posting extends AbstractPosting {
 
     /**
      * 构造函数
+     *
+     * @param docId：文档id
+     * @param freq：单词在该文档出现次数
+     * @param positions：单词在该文档出现位置
      */
     public Posting(int docId, int freq, List<Integer> positions){
         super(docId,freq,positions);
@@ -154,6 +158,7 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public void writeObject(ObjectOutputStream out) {
+
     }
 
     /**

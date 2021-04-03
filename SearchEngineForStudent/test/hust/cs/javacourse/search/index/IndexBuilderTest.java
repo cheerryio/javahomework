@@ -11,8 +11,13 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * IndexBuilder测试类
+ */
 public class IndexBuilderTest {
-
+    /**
+     * 测试函数
+     */
     @Test
     public void testIndexBuilder(){
         DocumentBuilder documentBuilder=new DocumentBuilder();
