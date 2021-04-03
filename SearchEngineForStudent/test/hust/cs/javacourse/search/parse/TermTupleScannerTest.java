@@ -19,8 +19,8 @@ public class TermTupleScannerTest {
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filePath))));
             AbstractTermTupleScanner termTupleScanner=new TermTupleScanner(reader);
             AbstractTermTuple termTuple=termTupleScanner.next();
-        }catch(Exception e){
-            System.out.println("error");
+        }catch(IOException e){
+            e.printStackTrace();
         }
 
     }

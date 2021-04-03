@@ -29,12 +29,12 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public String toString(){
-        String s="(";
+        String s="( ";
         for(AbstractPosting posting:this.list){
             s+=posting+"->";
         }
-        s+="()";
-        s+=")";
+        s+="(结束)";
+        s+=" )";
         return s;
     }
 

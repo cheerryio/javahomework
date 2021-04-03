@@ -6,10 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import hust.cs.javacourse.search.parse.impl.StopWordTermTupleFilter;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * StopWordTermTupleFiler测试类
@@ -23,21 +20,8 @@ public class StopWordTermTupleFilterTest {
             AbstractTermTupleScanner termTupleScanner=new TermTupleScanner(reader);
             AbstractTermTupleFilter termTupleFilter=new StopWordTermTupleFilter(termTupleScanner);
             AbstractTermTuple termTuple =termTupleFilter.next();
-            System.out.println(termTuple);
-            termTuple =termTupleFilter.next();
-            System.out.println(termTuple);
-            termTuple =termTupleFilter.next();
-            System.out.println(termTuple);
-            termTuple =termTupleFilter.next();
-            System.out.println(termTuple);
-            termTuple =termTupleFilter.next();
-            System.out.println(termTuple);
-            termTuple =termTupleFilter.next();
-            System.out.println(termTuple);
-            termTuple =termTupleFilter.next();
-            System.out.println(termTuple);
-        }catch(Exception e){
-            System.out.println(e);
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 }

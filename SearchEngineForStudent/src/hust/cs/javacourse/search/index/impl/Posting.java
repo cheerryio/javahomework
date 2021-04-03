@@ -62,7 +62,11 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public String toString() {
-        return "("+this.docId+","+this.freq+","+this.positions+")";
+        String s="";
+        s+="文档id: "+this.docId+"\t";
+        s+="单词出现次数: "+this.freq+"\t";
+        s+="单词出现位置: "+this.positions;
+        return s;
     }
 
     /**

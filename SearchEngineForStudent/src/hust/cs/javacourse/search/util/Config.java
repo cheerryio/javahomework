@@ -29,6 +29,12 @@ public class Config {
     public static String INDEX_DIR = PROJECT_HOME_DIR + "/index/";
     /**
      * <pre>
+     *  存放序列化后索引的文件的文件名
+     * </pre>
+     */
+    public static String INDEX_FILENAME="index";
+    /**
+     * <pre>
      *  文本文件的目录,以相对路径指定文本文件目录 ,将文本文件保存在当前工程目录下的text子目录中
      *  这样做的好处：文本文件目录是相对路径,无论你把整个工程放在什么位置，程序都可以正常运行.
      * </pre>

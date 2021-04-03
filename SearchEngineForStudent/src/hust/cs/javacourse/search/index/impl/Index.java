@@ -31,7 +31,7 @@ public class Index extends AbstractIndex {
         String s = "";
         for (AbstractTerm term : this.termToPostingListMapping.keySet()) {
             AbstractPostingList postingList = this.termToPostingListMapping.get(term);
-            s += term + ":"+postingList+"\n";
+            s += "单词: "+term + ": "+"出现文档信息: "+postingList+"\n";
         }
         return s;
     }
@@ -92,8 +92,8 @@ public class Index extends AbstractIndex {
         try{
             ObjectInputStream in=new ObjectInputStream(new FileInputStream(file));
             this.readObject(in);
-        }catch(Exception e){
-            System.out.println(e);
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -108,8 +108,8 @@ public class Index extends AbstractIndex {
         try{
             ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(file));
             this.writeObject(out);
-        }catch(Exception e){
-            System.out.println(e);
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
