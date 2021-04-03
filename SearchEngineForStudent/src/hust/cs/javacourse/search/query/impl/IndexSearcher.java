@@ -1,10 +1,12 @@
 package hust.cs.javacourse.search.query.impl;
+
 import hust.cs.javacourse.search.index.AbstractPosting;
 import hust.cs.javacourse.search.index.AbstractPostingList;
 import hust.cs.javacourse.search.index.AbstractTerm;
 import hust.cs.javacourse.search.query.AbstractHit;
 import hust.cs.javacourse.search.query.AbstractIndexSearcher;
 import hust.cs.javacourse.search.query.Sort;
+
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
@@ -131,26 +133,29 @@ public class IndexSearcher extends AbstractIndexSearcher {
                         continue;
                     }
 
-                    AbstractPosting posting1=termPostingMap.get(queryTerm1);
-                    AbstractPosting posting2=termPostingMap.get(queryTerm2);
-                    List<Integer> positions1=posting1.getPositions();
-                    List<Integer> positions2=posting2.getPositions();
-                    java.util.function.BiPredicate<Integer,List<Integer>> hasOneDistance=(n,positions) -> {
-                        for(int i:positions){
-                            if(Math.abs(n-i)==1){
-                                return true;
+                    AbstractPosting posting1 = termPostingMap.get(queryTerm1);
+                    AbstractPosting posting2 = termPostingMap.get(queryTerm2);
+                    List<Integer> positions1 = posting1.getPositions();
+                    List<Integer> positions2 = posting2.getPositions();
+                    java.util.function.BiPredicate<List<Integer>, List<Integer>> hasOneDistance = (p1, p2) -> {
+                        int l1 = p1.size();
+                        int l2 = p2.size();
+                        while (l1 != 0 && l2 != 0) {
+                            if (p1.get(l1-1) > p2.get(l2-1)) {
+                                if (p1.get(l1-1) - p2.get(l2-1) == 1) {
+                                    return true;
+                                }
+                                l1--;
+                            }else{
+                                if(p2.get(l2-1) - p1.get(l1-1) == 1){
+                                    return true;
+                                }
+                                l2--;
                             }
                         }
                         return false;
                     };
-                    boolean isNeighbor=false;
-                    for(int n:positions1){
-                        if(hasOneDistance.test(n,positions2)){
-                            isNeighbor=true;
-                            break;
-                        }
-                    }
-                    if(isNeighbor){
+                    if(hasOneDistance.test(positions1,positions2)){
 
                     }else{
                         continue;
