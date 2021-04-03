@@ -25,7 +25,7 @@ public class IndexSearchTest {
         IndexSearcher indexSearcher = new IndexSearcher();
         Path pathname = Paths.get(Config.INDEX_DIR, Config.INDEX_FILENAME);
         indexSearcher.open(pathname.toString());
-        AbstractTerm term = new Term("doer");
+        AbstractTerm term = new Term("according");
 
         sorter = new FreqSort();
         hits = indexSearcher.search(term, sorter);
@@ -47,11 +47,11 @@ public class IndexSearchTest {
         IndexSearcher indexSearcher = new IndexSearcher();
         Path pathname = Paths.get(Config.INDEX_DIR, Config.INDEX_FILENAME);
         indexSearcher.open(pathname.toString());
-        AbstractTerm term1 = new Term("doer");
-        AbstractTerm term2 = new Term("please");
+        AbstractTerm term1 = new Term("health");
+        AbstractTerm term2 = new Term("conditions");
 
         sorter = new FreqSort();
-        hits = indexSearcher.search(term1, term2, sorter, AbstractIndexSearcher.LogicalCombination.OR);
+        hits = indexSearcher.search(term1, term2, sorter, AbstractIndexSearcher.LogicalCombination.ANDNEIGHBOR);
         if(hits!=null){
             for (AbstractHit hit : hits) {
                 System.out.println(hit);
