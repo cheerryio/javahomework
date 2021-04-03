@@ -8,17 +8,22 @@ import hust.cs.javacourse.search.parse.AbstractTermTupleFilter;
 
 import hust.cs.javacourse.search.parse.AbstractTermTupleStream;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import hust.cs.javacourse.search.util.StopWords;
 
-public class TermTupleFilter extends AbstractTermTupleFilter{
+public class StopWordTermTupleFilter extends AbstractTermTupleFilter{
+    public List<String> stopwordList=null;
+
     /**
      * 构造函数
      * @param input：Filter的输入，类型为AbstractTermTupleStream
      */
-    public TermTupleFilter(AbstractTermTupleStream input){
+    public StopWordTermTupleFilter(AbstractTermTupleStream input){
         super(input);
+        this.stopwordList=new ArrayList<String>(Arrays.asList(StopWords.STOP_WORDS));
     }
 
     /**
@@ -27,12 +32,10 @@ public class TermTupleFilter extends AbstractTermTupleFilter{
      */
     public AbstractTermTuple next(){
         java.util.function.Function<AbstractTermTuple,Boolean> filter=(termTuple)->{
-          List<AbstractTerm> terms=new ArrayList<AbstractTerm>();
-          terms.add(new Term("aaa"));
-          if(terms.contains(termTuple.term)){
-              return true;
-          }
-          return false;
+            if(this.stopwordList.contains(termTuple.term.getContent())){
+                return true;
+            }
+            return false;
         };
 
         AbstractTermTuple termTuple = this.input.next();

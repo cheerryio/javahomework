@@ -2,21 +2,20 @@ package hust.cs.javacourse.search.index.impl;
 
 import hust.cs.javacourse.search.index.AbstractDocument;
 import hust.cs.javacourse.search.index.AbstractTermTuple;
-import hust.cs.javacourse.search.index.impl.Document;
-import hust.cs.javacourse.search.index.impl.Term;
 import hust.cs.javacourse.search.parse.AbstractTermTupleFilter;
 import hust.cs.javacourse.search.parse.AbstractTermTupleScanner;
 import hust.cs.javacourse.search.parse.AbstractTermTupleStream;
 import hust.cs.javacourse.search.index.AbstractDocumentBuilder;
-import hust.cs.javacourse.search.parse.impl.TermTupleFilter;
+import hust.cs.javacourse.search.parse.impl.LengthTermTupleFilter;
+import hust.cs.javacourse.search.parse.impl.PatternTermTupleFilter;
+import hust.cs.javacourse.search.parse.impl.StopWordTermTupleFilter;
 import hust.cs.javacourse.search.parse.impl.TermTupleScanner;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.List;
 
-public class DocumentBuilder extends AbstractDocumentBuilder{
+public class DocumentBuilder extends AbstractDocumentBuilder {
     /**
      * <pre>
      * 由解析文本文档得到的TermTupleStream,构造Document对象.
@@ -26,8 +25,15 @@ public class DocumentBuilder extends AbstractDocumentBuilder{
      * @return ：Document对象
      * </pre>
      */
-    public AbstractDocument build(int docId, String docPath, AbstractTermTupleStream termTupleStream){
-        return new Document();
+    public AbstractDocument build(int docId, String docPath, AbstractTermTupleStream termTupleStream) {
+        List<AbstractTermTuple> tuples = new ArrayList<AbstractTermTuple>();
+        AbstractTermTuple termTuple;
+        while ((termTuple = termTupleStream.next()) != null) {
+            tuples.add(termTuple);
+        }
+
+
+        return new Document(docId, docPath, tuples);
     }
 
     /**
@@ -41,21 +47,21 @@ public class DocumentBuilder extends AbstractDocumentBuilder{
      * @return          : Document对象
      * </pre>
      */
-    public AbstractDocument build(int docId, String docPath, File file){
-        List<AbstractTermTuple> tuples=new ArrayList<AbstractTermTuple>();
-
-        try{
+    public AbstractDocument build(int docId, String docPath, File file) {
+        try {
+            AbstractTermTupleStream ts = null;
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            AbstractTermTupleScanner termTupleScanner=new TermTupleScanner(reader);
-            AbstractTermTupleFilter termTupleFilter=new TermTupleFilter(termTupleScanner);
+            ts = new TermTupleScanner(reader);
+            ts = new StopWordTermTupleFilter(ts);
+            ts = new PatternTermTupleFilter(ts);
+            ts = new LengthTermTupleFilter(ts);
 
-            AbstractTermTuple termTuple;
-            while((termTuple=termTupleFilter.next())!=null){
-                tuples.add(termTuple);
-            }
-        }catch(FileNotFoundException e){
+            AbstractTermTupleFilter termTupleFilter = new StopWordTermTupleFilter(ts);
+            AbstractDocument document = this.build(docId, docPath, termTupleFilter);
+            return document;
+        } catch (FileNotFoundException e) {
             System.out.println("error");
         }
-        return new Document(docId,docPath,tuples);
+        return null;
     }
 }

@@ -2,10 +2,7 @@ package hust.cs.javacourse.search.index.impl;
 
 import hust.cs.javacourse.search.index.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
@@ -52,6 +49,7 @@ public class Index extends AbstractIndex {
             return;
         }
         int docId = document.getDocId();
+        this.docIdToDocPathMapping.put(docId,document.getDocPath());
         Map<AbstractTerm, AbstractPosting> m = new HashMap<AbstractTerm, AbstractPosting>();
         for (int i = 0; i < document.getTupleSize(); i++) {
             AbstractTermTuple termTuple = document.getTuples().get(i);
@@ -91,7 +89,12 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void load(File file) {
-
+        try{
+            ObjectInputStream in=new ObjectInputStream(new FileInputStream(file));
+            this.readObject(in);
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     /**
@@ -102,7 +105,12 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void save(File file) {
-
+        try{
+            ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(file));
+            this.writeObject(out);
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     /**
@@ -187,5 +195,12 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void readObject(ObjectInputStream in) {
+        try{
+            this.docIdToDocPathMapping=(Map<Integer, String>) (in.readObject());
+            this.termToPostingListMapping=(Map<AbstractTerm, AbstractPostingList>) (in.readObject());
+        }catch(Exception e){
+            System.err.println(e);
+        }
+
     }
 }

@@ -33,6 +33,8 @@ public class IndexBuilder extends AbstractIndexBuilder{
                 AbstractDocument document = this.docBuilder.build(this.docId++, path, file);
                 index.addDocument(document);
             }
+        }else{
+            System.err.println("ERROR: path is not a directory");
         }
         return index;
     }
