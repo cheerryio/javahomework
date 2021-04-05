@@ -4,6 +4,8 @@ import hust.cs.javacourse.search.index.AbstractDocument;
 import hust.cs.javacourse.search.index.AbstractDocumentBuilder;
 import hust.cs.javacourse.search.index.AbstractIndex;
 import hust.cs.javacourse.search.index.AbstractIndexBuilder;
+import hust.cs.javacourse.search.util.FileUtil;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -35,8 +37,7 @@ public class IndexBuilder extends AbstractIndexBuilder{
 
         File rootDir=new File(rootDirectory);
         if(rootDir.isDirectory()) {
-            for (String s : rootDir.list()) {
-                String path = Paths.get(rootDir.getAbsolutePath(), s).toString();
+            for (String path : FileUtil.list(rootDirectory)) {
                 File file = new File(path);
                 AbstractDocument document = this.docBuilder.build(this.docId++, path, file);
                 index.addDocument(document);

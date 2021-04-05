@@ -1,8 +1,12 @@
 package hust.cs.javacourse.search.index.impl;
 
+import hust.cs.javacourse.search.index.AbstractPostingList;
 import hust.cs.javacourse.search.index.AbstractTerm;
+
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Map;
 
 /**
  * AbstractTerm子类实现
@@ -33,9 +37,16 @@ public class Term extends AbstractTerm {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        return this.content.equals(((AbstractTerm)obj).getContent());
+        if(this == obj){
+            return true;
+        }
+        if(obj instanceof AbstractTerm){
+            AbstractTerm aobj=(AbstractTerm)obj;
+            if(this.content!=null && aobj.getContent()!=null){
+                return this.content.equals(aobj.getContent());
+            }
+        }
+        return false;
     }
 
     /**
@@ -86,7 +97,11 @@ public class Term extends AbstractTerm {
      */
     @Override
     public void writeObject(ObjectOutputStream out) {
-
+        try{
+            out.writeObject(this.content);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -96,6 +111,12 @@ public class Term extends AbstractTerm {
      */
     @Override
     public void readObject(ObjectInputStream in) {
-
+        try{
+            this.content=(String)(in.readObject());
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 }

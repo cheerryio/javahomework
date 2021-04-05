@@ -2,12 +2,14 @@ package hust.cs.javacourse.search.index.impl;
 
 import hust.cs.javacourse.search.index.AbstractPosting;
 import hust.cs.javacourse.search.index.AbstractPostingList;
+import hust.cs.javacourse.search.index.AbstractTerm;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * AbstractPostingList子类实现
@@ -45,7 +47,7 @@ public class PostingList extends AbstractPostingList {
     @Override
     public void add(List<AbstractPosting> postings){
         for(AbstractPosting posting:postings){
-            this.list.add(posting);
+            this.add(posting);
         }
     }
 
@@ -168,6 +170,11 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public void writeObject(ObjectOutputStream out) {
+        try{
+            out.writeObject(this.list);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -177,6 +184,12 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public void readObject(ObjectInputStream in) {
-
+        try{
+            this.list=(List<AbstractPosting>)(in.readObject());
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 }

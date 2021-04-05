@@ -45,6 +45,7 @@ public class Index extends AbstractIndex {
      */
     @Override
     public void addDocument(AbstractDocument document) {
+        AbstractPostingList postingList=null;
         if (document == null) {
             return;
         }
@@ -54,30 +55,28 @@ public class Index extends AbstractIndex {
         for (int i = 0; i < document.getTupleSize(); i++) {
             AbstractTermTuple termTuple = document.getTuples().get(i);
             AbstractTerm term = termTuple.term;
-
-            if (m.containsKey(term)) {
+            AbstractPosting posting=null;
+            if (this.termToPostingListMapping.containsKey(term)) {
                 // 此单词出现过
-                AbstractPosting posting = m.get(term);
-                posting.setFreq(posting.getFreq() + 1);
-                posting.getPositions().add(i);
+                postingList=this.termToPostingListMapping.get(term);
             } else {
                 // 此单词未出现过
-                AbstractPosting posting = new Posting();
+                postingList=new PostingList();
+                this.termToPostingListMapping.put(term,postingList);
+            }
+
+            int index=postingList.indexOf(docId);
+            if(index!=-1){
+                // 此文档id在PostingList出现过
+                posting=postingList.get(index);
+                posting.setFreq(posting.getFreq()+1);
+            }else{
+                posting=new Posting();
                 posting.setDocId(docId);
                 posting.setFreq(1);
-                posting.getPositions().add(i);
-                m.put(term, posting);
-            }
-        }
-        for (AbstractTerm term : m.keySet()) {
-            AbstractPosting posting = m.get(term);
-            if (this.termToPostingListMapping.containsKey(term)) {
-                this.termToPostingListMapping.get(term).add(posting);
-            } else {
-                AbstractPostingList postingList = new PostingList();
                 postingList.add(posting);
-                this.termToPostingListMapping.put(term, postingList);
             }
+            posting.getPositions().add(termTuple.curPos);
         }
     }
 

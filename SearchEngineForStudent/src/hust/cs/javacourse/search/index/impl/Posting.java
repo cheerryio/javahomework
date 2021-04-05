@@ -1,11 +1,15 @@
 package hust.cs.javacourse.search.index.impl;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import hust.cs.javacourse.search.index.AbstractPosting;
+import hust.cs.javacourse.search.index.AbstractPostingList;
+import hust.cs.javacourse.search.index.AbstractTerm;
 
 /**
  * <pre>
@@ -49,10 +53,18 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        Posting t = (Posting) obj;
-        return this.docId == t.docId && this.freq == t.freq && this.positions.equals(t.positions);
+        if(this == obj){
+            return true;
+        }
+        if(obj instanceof AbstractPosting){
+            AbstractPosting aobj=(AbstractPosting)obj;
+            if(this.positions!=null && aobj.getPositions()!=null){
+                return this.docId == aobj.getDocId() && this.freq == aobj.getFreq() && this.positions.containsAll(aobj.getPositions()) && aobj.getPositions().containsAll(this.positions);
+            }else if(this.positions==null && aobj.getPositions()==null){
+                return this.docId==aobj.getDocId() && this.freq==aobj.getFreq();
+            }
+        }
+        return false;
     }
 
     /**
@@ -62,11 +74,11 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public String toString() {
-        String s="";
-        s+="文档id: "+this.docId+"\t";
-        s+="单词出现次数: "+this.freq+"\t";
-        s+="单词出现位置: "+this.positions;
-        return s;
+        StringBuffer s=new StringBuffer("");
+        s.append("文档id: "+this.docId+"\t");
+        s.append("单词出现次数: "+this.freq+"\t");
+        s.append("单词出现位置: "+this.positions);
+        return s.toString();
     }
 
     /**
@@ -162,7 +174,13 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public void writeObject(ObjectOutputStream out) {
-
+        try{
+            out.writeObject(this.docId);
+            out.writeObject(this.freq);
+            out.writeObject(this.positions);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -172,6 +190,14 @@ public class Posting extends AbstractPosting {
      */
     @Override
     public void readObject(ObjectInputStream in) {
-
+        try{
+            this.docId=(int)(in.readObject());
+            this.freq=(int)(in.readObject());
+            this.positions=(List<Integer>)(in.readObject());
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 }

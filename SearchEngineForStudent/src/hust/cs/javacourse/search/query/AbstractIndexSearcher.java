@@ -28,9 +28,6 @@ public abstract class AbstractIndexSearcher {
          * 或, 即任意一个检索词在命中文档里出现
          */
         OR,
-        /**
-         * 与且相邻，即多个检索词必须在命中文档里出现且相邻
-         */
         ANDNEIGHBOR
     }
     /**

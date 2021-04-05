@@ -88,7 +88,7 @@ public class Document extends AbstractDocument{
      */
     @Override
     public void addTuple(AbstractTermTuple tuple){
-        if(!this.tuples.contains(tuple)){
+        if(!this.contains(tuple)){
             this.tuples.add(tuple);
         }
     }
@@ -128,6 +128,15 @@ public class Document extends AbstractDocument{
      */
     @Override
     public String toString(){
-        return "Document字符串表示";
+        StringBuffer s=new StringBuffer("");
+        s.append("文档id: "+this.docId+"\n");
+        s.append("文档路径: "+this.docPath+"\n");
+        s.append("三元组: [ ");
+        for(AbstractTermTuple termTuple:this.tuples){
+            s.append(termTuple);
+            s.append(", ");
+        }
+        s.append(" ]");
+        return s.toString();
     }
 }

@@ -8,13 +8,18 @@ import hust.cs.javacourse.search.index.AbstractTermTuple;
  */
 public class TermTuple extends AbstractTermTuple {
 
+    public TermTuple(){
+        super();
+    }
+
     /**
      * 构造函数
      * @param term：单词
      * @param curPos：单词在文档中位置
      */
     public TermTuple(AbstractTerm term,int curPos){
-        super(term,curPos);
+        this.term=term;
+        this.curPos=curPos;
     }
 
     /**
@@ -25,10 +30,16 @@ public class TermTuple extends AbstractTermTuple {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        TermTuple t = (TermTuple) obj;
-        return this.term.equals(t.term) && this.freq == t.freq && this.curPos == t.curPos;
+        if(this == obj){
+            return true;
+        }
+        if(obj instanceof AbstractTermTuple){
+            AbstractTermTuple aobj=(AbstractTermTuple)obj;
+            if(this.term!=null){
+                return this.term.equals(aobj.term) && this.freq == aobj.freq && this.curPos == aobj.curPos;
+            }
+        }
+        return false;
     }
 
     /**

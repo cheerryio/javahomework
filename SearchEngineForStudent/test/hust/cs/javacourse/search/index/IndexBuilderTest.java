@@ -30,7 +30,6 @@ public class IndexBuilderTest {
             index.writeObject(out);
         }catch(IOException e){
             e.printStackTrace();
-            return;
         }
     }
 
@@ -45,9 +44,7 @@ public class IndexBuilderTest {
             System.out.println(index);
         }catch (IOException e){
             e.printStackTrace();
-            return;
         }
-
         System.out.println(index);
     }
 

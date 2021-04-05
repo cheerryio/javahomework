@@ -126,4 +126,5 @@ public abstract class AbstractHit implements Comparable<AbstractHit>{
     @Override
     public abstract int compareTo(AbstractHit o);
 
+
 }

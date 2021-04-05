@@ -49,28 +49,32 @@ public class TermTupleScanner extends AbstractTermTupleScanner {
     public AbstractTermTuple next() {
         try {
             int c = this.input.read();
-            Matcher m = this.spliter.matcher(String.valueOf((char) c));
+            Matcher spliterm = this.spliter.matcher(String.valueOf((char) c));
             String s = "";
-            while (m.find()) {
+
+            // 忽略前方所有空白字符
+            while (spliterm.find()) {
                 c = this.input.read();
-                m = this.spliter.matcher(String.valueOf((char) c));
-            }
-            while (c != -1 && !m.find()) {
-                s += (char) c;
-                c = this.input.read();
-                m = this.spliter.matcher(String.valueOf((char) c));
-            }
-            if (c == -1) {
-                return null;
+                spliterm = this.spliter.matcher(String.valueOf((char) c));
             }
 
-            // 是否忽略大小写
-            if(Config.IGNORE_CASE){
-                s=s.toLowerCase(Locale.ROOT);
+            while (c != -1 && !spliterm.find()) {
+                s += (char) c;
+                c = this.input.read();
+                spliterm = this.spliter.matcher(String.valueOf((char) c));
             }
-            AbstractTerm term = new Term(s);
-            AbstractTermTuple termTuple = new TermTuple(term, curcurpos++);
-            return termTuple;
+
+            if(s.length() > 0) {
+                // 是否忽略大小写
+                if (Config.IGNORE_CASE) {
+                    s = s.toLowerCase(Locale.ROOT);
+                }
+                AbstractTerm term = new Term(s);
+                AbstractTermTuple termTuple = new TermTuple(term, curcurpos++);
+                return termTuple;
+            }
+
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
         }

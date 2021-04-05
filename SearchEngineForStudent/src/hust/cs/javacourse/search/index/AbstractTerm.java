@@ -23,9 +23,9 @@ public abstract class AbstractTerm implements  Comparable<AbstractTerm>, FileSer
     }
 
     /**
-     * 因为要作为hashMap里面的key，因此必须要覆盖hashCode方法
-     * 返回对象的hashCode
-     * @return ：对象的hashCode
+     * 因为要作为HashMap里面的key，因此必须要覆盖hashCode方法
+     * 返回对象的HashCode
+     * @return ：对象的HashCode
      */
     @Override
     public int hashCode() {

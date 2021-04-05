@@ -12,10 +12,9 @@ import java.io.File;
 public class DocumentBuilderTest {
     @Test
     void testDocumentBuilder() {
-        File file = new File("text/1.txt");
-        System.out.println(file.getAbsolutePath());
+        File file = new File("text/2.txt");
         DocumentBuilder documentBuilder = new DocumentBuilder();
         AbstractDocument document = documentBuilder.build(1, file.getAbsolutePath(), file);
-        System.out.println(document.getTuples());
+        System.out.println(document);
     }
 }

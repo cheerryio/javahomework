@@ -18,6 +18,12 @@ import java.util.List;
  * AbstractDocumentBuilder子类实现
  */
 public class DocumentBuilder extends AbstractDocumentBuilder {
+
+    public DocumentBuilder(){
+
+    }
+
+
     /**
      * <pre>
      * 由解析文本文档得到的TermTupleStream,构造Document对象.
@@ -29,14 +35,13 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
      */
     @Override
     public AbstractDocument build(int docId, String docPath, AbstractTermTupleStream termTupleStream) {
+        AbstractDocument document=new Document(docId,docPath);
         List<AbstractTermTuple> tuples = new ArrayList<AbstractTermTuple>();
         AbstractTermTuple termTuple;
         while ((termTuple = termTupleStream.next()) != null) {
-            tuples.add(termTuple);
+            document.addTuple(termTuple);
         }
-
-
-        return new Document(docId, docPath, tuples);
+        return document;
     }
 
     /**
@@ -60,8 +65,7 @@ public class DocumentBuilder extends AbstractDocumentBuilder {
             ts = new PatternTermTupleFilter(ts);
             ts = new LengthTermTupleFilter(ts);
 
-            AbstractTermTupleFilter termTupleFilter = new StopWordTermTupleFilter(ts);
-            AbstractDocument document = this.build(docId, docPath, termTupleFilter);
+            AbstractDocument document = this.build(docId, docPath, ts);
             return document;
         } catch (FileNotFoundException e) {
             e.printStackTrace();

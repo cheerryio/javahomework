@@ -17,10 +17,6 @@ public abstract class AbstractIndexBuilder {
      */
     protected int docId = 0;
 
-    /**
-     * 构造函数
-     * @param docBuilder：文档构建类
-     */
     public AbstractIndexBuilder(AbstractDocumentBuilder docBuilder){
         this.docBuilder = docBuilder;
     }
