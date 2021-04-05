@@ -1,7 +1,3 @@
-package chapter4to5;
-
-import java.lang.Math;
-
 /**
  *
  * 2：假设一个车牌号码由三个大写字母和后面的四个数字组成。编写一个程序. 生

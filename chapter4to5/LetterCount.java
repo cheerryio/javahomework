@@ -1,5 +1,3 @@
-package chapter4to5;
-
 import java.util.Scanner;
 
 /**
