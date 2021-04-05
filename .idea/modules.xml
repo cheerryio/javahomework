@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SearchEngineForStudent/SearchEngineForStudent.iml" filepath="$PROJECT_DIR$/SearchEngineForStudent/SearchEngineForStudent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/javahomework.iml" filepath="$PROJECT_DIR$/javahomework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chapter2to3/chapter2to3.iml" filepath="$PROJECT_DIR$/chapter2to3/chapter2to3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chapter4to5/chapter4to5.iml" filepath="$PROJECT_DIR$/chapter4to5/chapter4to5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chapter6to7/chapter6to7.iml" filepath="$PROJECT_DIR$/chapter6to7/chapter6to7.iml" />
     </modules>
   </component>
 </project>

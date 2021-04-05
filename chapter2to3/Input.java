@@ -1,5 +1,3 @@
-package chapter2to3;
-
 import java.util.Scanner;
 
 public class Input {

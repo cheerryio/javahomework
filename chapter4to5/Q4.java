@@ -1,5 +1,3 @@
-package chapter4to5;
-
 public class Q4{
     public static void main(String[] args){
         String s1="Welcome";

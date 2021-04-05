@@ -1,5 +1,3 @@
-package chapter6to7;
-
 public class Qbig5 {
     /**
      * 创建一个不规则二维数组

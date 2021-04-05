@@ -1,5 +1,3 @@
-package chapter6to7;
-
 import java.util.Arrays;
 
 public class Q3 {
