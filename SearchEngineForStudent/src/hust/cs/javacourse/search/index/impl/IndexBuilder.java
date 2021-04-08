@@ -5,10 +5,6 @@ import hust.cs.javacourse.search.index.AbstractDocumentBuilder;
 import hust.cs.javacourse.search.index.AbstractIndex;
 import hust.cs.javacourse.search.index.AbstractIndexBuilder;
 import hust.cs.javacourse.search.util.FileUtil;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import java.io.File;
 
 /**

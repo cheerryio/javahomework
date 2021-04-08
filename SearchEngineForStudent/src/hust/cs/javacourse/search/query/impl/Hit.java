@@ -105,19 +105,19 @@ public class Hit extends AbstractHit implements Comparable<AbstractHit>{
      */
     @Override
     public String toString(){
-        String s="";
-        s+="文档id:  "+this.docId+"\n";
-        s+="文档内容: "+this.content+"\n";
-        s+="命中关键字信息: ";
-        s+="(";
+        StringBuffer s=new StringBuffer("");
+        s.append("文档id:  "+this.docId+"\n");
+        s.append("文档内容: "+this.content+"\n");
+        s.append("命中关键字信息: ");
+        s.append("(");
         for(AbstractTerm term:termPostingMapping.keySet()){
             AbstractPosting posting=this.termPostingMapping.get(term);
-            s+=term+":"+posting+",";
+            s.append(term+":"+posting+",");
         }
-        s+=")\n";
-        s+="得分: "+this.score+"\n";
-        s+="路径: "+this.docPath+"\n";
-        return s;
+        s.append(")\n");
+        s.append("得分: "+this.score+"\n");
+        s.append("路径: "+this.docPath+"\n");
+        return s.toString();
     }
 
     /**

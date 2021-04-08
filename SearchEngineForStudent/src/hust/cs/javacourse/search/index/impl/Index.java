@@ -28,12 +28,12 @@ public class Index extends AbstractIndex {
      */
     @Override
     public String toString() {
-        String s = "";
+        StringBuffer s=new StringBuffer("");
         for (AbstractTerm term : this.termToPostingListMapping.keySet()) {
             AbstractPostingList postingList = this.termToPostingListMapping.get(term);
-            s += "单词: "+term + ": "+"出现文档信息: "+postingList+"\n";
+            s.append("单词: "+term + ": "+"出现文档信息: "+postingList+"\n");
         }
-        return s;
+        return s.toString();
     }
 
     /**

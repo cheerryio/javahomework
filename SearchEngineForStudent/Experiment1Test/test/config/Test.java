@@ -2,8 +2,8 @@ package config;
 
 import config.Config;
 
-public class Test{
+public class Test {
     public static void main(String[] args){
-        System.out.println(Config.var10000);
+        System.out.println(Config.class.getResource("").getPath());
     }
 }

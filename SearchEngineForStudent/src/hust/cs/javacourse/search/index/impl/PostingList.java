@@ -31,13 +31,13 @@ public class PostingList extends AbstractPostingList {
      */
     @Override
     public String toString(){
-        String s="( ";
+        StringBuffer s=new StringBuffer("(");
         for(AbstractPosting posting:this.list){
-            s+=posting+"->";
+            s.append(posting+"->");
         }
-        s+="(结束)";
-        s+=" )";
-        return s;
+        s.append("(结束)");
+        s.append(" )");
+        return s.toString();
     }
 
     /**
