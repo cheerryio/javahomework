@@ -1,5 +1,7 @@
 package homework.ch11_13.p3;
 
+import java.util.Objects;
+
 public class Student extends Person implements Cloneable {
     /**
      * 学生Id
@@ -67,28 +69,21 @@ public class Student extends Person implements Cloneable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj instanceof Student) {
-            Student aobj = (Student) obj;
-            if(!super.equals(aobj)){
-                return false;
-            }
-            if(this.department!=null && !this.department.equals(aobj.getDepartment())){
-                return false;
-            }
-            if(this.classNo!=null && !this.classNo.equals(aobj.getClassNo())){
-                return false;
-            }
-            return this.studentId==aobj.getStudentId();
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Student student = (Student) o;
+        return studentId == student.studentId && Objects.equals(department, student.department) && Objects.equals(classNo, student.classNo);
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public int hashCode() {
+        return Objects.hash(studentId, department, classNo);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
         Student newObj=(Student)(super.clone());
         if(this.department!=null){
             newObj.setDepartment(new String(this.department));

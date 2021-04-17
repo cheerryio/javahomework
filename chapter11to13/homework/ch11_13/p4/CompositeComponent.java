@@ -1,5 +1,7 @@
 package homework.ch11_13.p4;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class CompositeComponent extends Component {
     /**
      * 保存子组件,放在 ComponentList 里
@@ -24,6 +26,11 @@ public class CompositeComponent extends Component {
         super(id, name, price);
     }
 
+    @Override
+    public double getPrice() {
+        return this.calcPrice();
+    }
+
     /**
      * 添加子组件，对于没有子组件的 AtomicComponent 如内存条，调用这个方法应该抛出
      * UnsupportedOperationException. 相同的子组件不能重复加入
@@ -34,7 +41,6 @@ public class CompositeComponent extends Component {
     @Override
     public void add(Component component) throws UnsupportedOperationException {
         this.childs.add(component);
-        this.price=this.calcPrice();
     }
 
     /**
@@ -80,13 +86,9 @@ public class CompositeComponent extends Component {
         Iterator prevIt=null;
         Iterator it=this.iterator();
         StringBuffer s=new StringBuffer("");
-        s.append("sub-components of "+this.name+"\n");
-        while(it.hasNext()){
-            c=it.next();
-            s.append("id:"+c.getId()+" 名字:"+c.getName()+" 价格:"+c.getPrice()+"\n");
-//            if(c instanceof CompositeComponent){
-//                s.append("sub-components of "+c.getName()+"\n");
-//            }
+        s.append(super.toString());
+        for(Component child:childs){
+            s.append(child.toString());
         }
 
         return s.toString();

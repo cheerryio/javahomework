@@ -58,7 +58,7 @@ public class Person implements Cloneable {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         Person newObj=(Person)(super.clone());
         if(this.name!=null){
             newObj.setName(new String(this.name));

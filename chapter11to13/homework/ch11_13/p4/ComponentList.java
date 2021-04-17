@@ -32,8 +32,11 @@ public class ComponentList extends ArrayList<Component> implements Iterator {
      */
     @Override
     public Component next() {
-        Component c=this.get(this.position);
-        this.position++;
-        return c;
+        if(this.hasNext()){
+            Component c=this.get(this.position);
+            this.position++;
+            return c;
+        }
+        return null;
     }
 }
