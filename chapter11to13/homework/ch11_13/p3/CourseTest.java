@@ -14,7 +14,7 @@ public class CourseTest {
      * @throws CloneNotSupportedException
      */
     public static void main(String args[]) throws CloneNotSupportedException{
-        Student student1=new Student("学生1",18,20,"CS","K14345");
+        Student student1=new Student("学生1",18,20,"CS",null);
         Student student2=new Student("学生2",19,30,"ME","K15475");
         Student student3=new Student("学生3",15,40,"QJ","K13522");
         Student student4=new Student("学生4",10,50,"WK","K58522");
@@ -36,13 +36,8 @@ public class CourseTest {
 
         // 测试深拷贝
         Person p=null;
-        p=(Person)student1.clone();
-        assert p.equals(student1) && p!=student1;
-        p=(Person)teacher1;
-        assert p.equals(student1) && p!=student1;
-
-        Course c=null;
-        c=(Course)courses[0].clone();
-        assert c.equals(courses[0]) && c!=courses[0];
+        Faculty s=teacher1;
+        Faculty cloned=(Faculty) s.clone();
+        assert s.equals(cloned) && s.getName() != cloned.getName() && s.getTitle() != cloned.getTitle() && s.getEmail() != cloned.getEmail();
     }
 }

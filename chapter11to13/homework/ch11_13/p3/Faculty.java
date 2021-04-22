@@ -1,5 +1,7 @@
 package homework.ch11_13.p3;
 
+import java.util.Objects;
+
 public class Faculty extends Person implements Cloneable {
     /**
      * 教工Id
@@ -67,28 +69,21 @@ public class Faculty extends Person implements Cloneable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(this==obj){
-            return true;
-        }
-        if(obj instanceof Faculty){
-            Faculty aobj=(Faculty)obj;
-            if(!super.equals(aobj)){
-                return false;
-            }
-            if(this.title!=null && !this.title.equals(aobj.getTitle())){
-                return false;
-            }
-            if(this.email!=null && !this.email.equals(aobj.getEmail())){
-                return false;
-            }
-            return this.facultyId== aobj.getFacultyId();
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Faculty faculty = (Faculty) o;
+        return facultyId == faculty.facultyId && Objects.equals(title, faculty.title) && Objects.equals(email, faculty.email);
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public int hashCode() {
+        return Objects.hash(facultyId, title, email);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
         Faculty newObj=(Faculty)super.clone();
         if(this.title!=null){
             newObj.setTitle(new String(this.title));

@@ -50,7 +50,7 @@ public class AtomicComponent extends Component {
      */
     @Override
     public double calcPrice() {
-        return 0;
+        return this.price;
     }
 
     /**

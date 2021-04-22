@@ -2,6 +2,7 @@ package homework.ch11_13.p3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Course implements Cloneable {
     /**
@@ -72,43 +73,42 @@ public class Course implements Cloneable {
 
     @Override
     public String toString() {
-        return "课程名称："+this.courseName+" 学生人数："+this.getNumberOfStudent()+"老师："+this.teacher;
-    }
-
-    /**
-     * 当二个对象当二个对象所有数据成员的内容相等，返回 true。注意学生名单内容也要相等（元素
-     * 个数相等，每个 List 里的每个对象在另外一个 List 里都有唯一的内容相等的元素，但次序可以不
-     * 同）
-     *
-     * @param obj
-     * @return
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if(this==obj){
-            return true;
+        StringBuffer s=new StringBuffer("");
+        s.append("课程名称："+this.courseName);
+        s.append("学生:");
+        for(Person student:this.students){
+            s.append(student.toString());
+            s.append("--");
         }
-        if(obj instanceof Course){
-            Course aobj=(Course)obj;
-            if(this.courseName!=null && !this.courseName.equals(aobj.getCourseName())){
-                return false;
-            }
-            if(this.teacher!=null && !this.teacher.equals(aobj.getTeacher())){
-                return false;
-            }
-            if(!(this.getNumberOfStudent() == aobj.getNumberOfStudent()) || !this.students.containsAll(aobj.getStudents())){
-                return false;
-            }
-            return true;
-        }
-        return false;
+        s.append("老师："+this.teacher);
+        return s.toString();
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(courseName, course.courseName) &&
+                Objects.equals(teacher, course.teacher) &&
+                this.students.size()==course.getNumberOfStudent() &&
+                this.students.containsAll(course.students);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseName, students, teacher);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
         Course newObj=(Course)super.clone();
         newObj.courseName=new String(this.courseName);
-        newObj.students=new ArrayList<Person>(this.students);
+        List<Person> newStudents=new ArrayList<Person>(this.students.size());
+        for(Person s:this.students){
+            newStudents.add((Person)s.clone());
+        }
+        newObj.students=newStudents;
         newObj.teacher=(Person)this.teacher.clone();
         return newObj;
     }
